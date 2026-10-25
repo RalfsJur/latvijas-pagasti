@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Latvijas pagasti</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<aside id="panel">
+  <div id="grip" aria-hidden="true"></div>
+  <h1>Latvijas pagasti</h1>
+  <div class="big"><span id="cnt">0</span><small>no <span id="total">0</span> pagastiem</small></div>
+  <h2 class="list-title">Atminētie pagasti</h2>
+  <div id="list">
+    <ul id="rows"></ul>
+    <p id="empty" class="empty">Sāc ar pagastu, kuru pazīsti.</p>
+  </div>
+  <div class="actions">
+    <button id="reset">Sākt no jauna</button>
+  </div>
+</aside>
+
+<main>
+  <div id="map">
+    <svg id="svg" aria-label="Latvijas pagastu karte"><g id="view"><g id="base"></g><g id="won"></g></g></svg>
+    <div class="zoom">
+      <button id="zin" aria-label="Pietuvināt">+</button>
+      <button id="zout" aria-label="Attālināt">−</button>
+    </div>
+  </div>
+  <div id="search">
+    <input id="guess" type="text" placeholder="Ievadi pagasta nosaukumu!" autocomplete="off" disabled>
+    <button id="go" disabled aria-label="Iesniegt">↵</button>
+    <div id="msg"></div>
+  </div>
+  <div id="loader">
+    <div class="card">
+      <h2>Ielādē datus…</h2>
+      <p id="loadStatus"></p>
+    </div>
+  </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
