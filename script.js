@@ -1,12 +1,12 @@
-// ---- Latvijas pagastu spēle (bez Leaflet) ----
+
 const KEY = 'latvijas_pagasti_v1';
 const DATA_FILE = 'pagasti.geojson';
 
-// Ja automātiskā lauka atpazīšana kļūdās, ieraksti lauka nosaukumu šeit (piem., 'NOSAUKUMS'):
+
 const NAME_FIELD = null;
-// Izlaist ierakstus, kuru nosaukums beidzas ar novads / pilsēta (ja failā tādi gadās)
+
 const SKIP_NON_PAGASTS = true;
-const WORLD_W = 2000;   // kartes iekšējais platums (vienības)
+const WORLD_W = 2000;   
 
 let parishes = {};      // normalizēts nosaukums -> {name, features: [], paths: []}
 let guessed = JSON.parse(localStorage.getItem(KEY) || '[]');
@@ -29,7 +29,7 @@ const stripType = k => {
 const lookup = input => byBase[stripType(norm(input))] || [];
 const firstCoord = c => typeof c[0] === 'number' ? c : firstCoord(c[0]);
 
-// ---------- Datu ielāde ----------
+
 fetch(DATA_FILE)
   .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
   .then(startGame)
@@ -44,7 +44,7 @@ function startGame(geo) {
   const nf = NAME_FIELD || keys.find(k => /^(nosaukums|name)$/i.test(k)) ||
     keys.find(k => /nosauk|name|nos/i.test(k)) || keys[0];
 
-  // Koordinātas metros (LKS-92) lietojam tieši; grādus pārvēršam ar vienkāršu projekciju
+  
   const f0 = geo.features.find(f => f.geometry && f.geometry.coordinates && f.geometry.coordinates.length);
   const planar = Math.abs(firstCoord(f0.geometry.coordinates)[0]) > 180;
   const cl = Math.cos(56.9 * Math.PI / 180);
@@ -98,7 +98,7 @@ function startGame(geo) {
   render();
 }
 
-// ---------- Karte: pārvietošana un tuvināšana ----------
+
 function apply() { view.setAttribute('transform', `translate(${T.x} ${T.y}) scale(${T.k})`); }
 function fit() {
   const w = mapEl.clientWidth, h = mapEl.clientHeight, top = 80, pad = 24;
@@ -150,7 +150,7 @@ const endPtr = e => { ptrs.delete(e.pointerId); if (!ptrs.size) mapEl.classList.
 mapEl.addEventListener('pointerup', endPtr);
 mapEl.addEventListener('pointercancel', endPtr);
 
-// ---------- Spēles loģika ----------
+
 function draw(k) {
   for (const p of parishes[k].paths) {
     p.classList.add('on');
@@ -192,7 +192,7 @@ function submit() {
 $('go').onclick = submit;
 $('guess').addEventListener('keydown', e => e.key === 'Enter' && submit());
 
-// ---------- Interfeiss ----------
+
 function render(newKey) {
   $('cnt').textContent = countOf(guessed);
   $('empty').hidden = guessed.length > 0;
@@ -207,7 +207,7 @@ $('reset').onclick = () => {
   guessed = []; localStorage.removeItem(KEY); render();
 };
 
-// ---------- Velkama apakšējā daļa (mobilajā) ----------
+
 (() => {
   const grip = $('grip'), panel = $('panel');
   let startY = null, startH = 0;
